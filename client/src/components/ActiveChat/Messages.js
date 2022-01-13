@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { Box } from "@material-ui/core";
 import { SenderBubble, OtherUserBubble } from "../ActiveChat";
 import moment from "moment";
+
 
 const Messages = (props) => {
   const { messages, otherUser, userId } = props;
