@@ -10,10 +10,20 @@ import {
   TextField,
   FormHelperText,
 } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core/styles";
 import { register } from "./store/utils/thunkCreators";
+const useStyles = makeStyles((theme) => ({
+  root: {
+    display: 'flex',
+  },
+  formContainer: {
+    width: 380
+  }
+}));
 
 const Login = (props) => {
   const history = useHistory();
+  const classes = useStyles()
   const { user, register } = props;
   const [formErrorMessage, setFormErrorMessage] = useState({});
 
@@ -39,25 +49,26 @@ const Login = (props) => {
   return (
     <Grid container justify="center">
       <Box>
-        <Grid container item>
+        {/* <Grid container item>
           <Typography>Need to log in?</Typography>
           <Button onClick={() => history.push("/login")}>Login</Button>
-        </Grid>
+        </Grid> */}
         <form onSubmit={handleRegister}>
-          <Grid>
+          <Grid className={classes.formContainer}>
             <Grid>
-              <FormControl>
+              <FormControl fullWidth>
                 <TextField
                   aria-label="username"
                   label="Username"
                   name="username"
                   type="text"
                   required
+                  
                 />
               </FormControl>
             </Grid>
             <Grid>
-              <FormControl>
+              <FormControl fullWidth>
                 <TextField
                   label="E-mail address"
                   aria-label="e-mail address"
@@ -68,7 +79,7 @@ const Login = (props) => {
               </FormControl>
             </Grid>
             <Grid>
-              <FormControl error={!!formErrorMessage.confirmPassword}>
+              <FormControl error={!!formErrorMessage.confirmPassword} fullWidth>
                 <TextField
                   aria-label="password"
                   label="Password"
@@ -83,7 +94,7 @@ const Login = (props) => {
               </FormControl>
             </Grid>
             <Grid>
-              <FormControl error={!!formErrorMessage.confirmPassword}>
+              <FormControl error={!!formErrorMessage.confirmPassword} fullWidth>
                 <TextField
                   label="Confirm Password"
                   aria-label="confirm password"
