@@ -49,7 +49,13 @@ const useStyles = makeStyles((theme) => ({
     },
     account: {
         minWidth: 351,
-        flexGrow: 1
+        flexGrow: 1,
+        display: 'flex',
+        flexDirection: 'column'
+    },
+    accountForm: {
+        flexGrow: 1,
+        paddingTop: '86px'
     }
   }));
 
