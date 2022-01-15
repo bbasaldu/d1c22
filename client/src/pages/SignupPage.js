@@ -1,11 +1,25 @@
-import AuthLayout from "../layouts/AuthLayout"
-import Signup from "../Signup"
+import { useMediaQuery } from "@material-ui/core";
+import { Fragment } from "react";
+import AuthLayout from "../layouts/AuthLayout";
+import AuthLayoutMobile from "../layouts/AuthLayoutMobile";
+import Signup from "../Signup";
 
 const SignupPage = () => {
-    return (
+  const isMobile = useMediaQuery("(max-width:880px)");
+
+  return (
+    <Fragment>
+      {isMobile && (
+        <AuthLayoutMobile>
+          <Signup />
+        </AuthLayoutMobile>
+      )}
+      {!isMobile && (
         <AuthLayout>
-            <Signup/>
+          <Signup />
         </AuthLayout>
-    )
-}
-export default SignupPage
+      )}
+    </Fragment>
+  );
+};
+export default SignupPage;

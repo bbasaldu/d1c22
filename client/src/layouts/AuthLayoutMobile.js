@@ -5,17 +5,16 @@ import pathToBubbleIcon from "../assets/bubble.svg";
 import AuthFormSwitch from "../components/AuthFormSwitch";
 const useStyles = makeStyles((theme) => ({
   root: {
-    display: "flex",
-  },
-  sideBanner: {
     position: "relative",
     backgroundImage: `url(${pathToBgImage})`,
+    backgroundSize: "cover",
+    backgroundPosition: "top center",
     minWidth: 425,
-    minHeight: 700,
-    height: "100vh",
+    minHeight: "100vh",
     zIndex: 1,
     display: "flex",
-    justifyContent: "center",
+    flexDirection: "column",
+    alignItems: "center",
   },
   bg: {
     position: "absolute",
@@ -33,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
     height: 186,
     textAlign: "center",
     overflowWrap: "break-word",
-    paddingTop: "50%",
+    marginTop: "10px",
   },
   bannerText: {
     fontSize: 26,
@@ -42,42 +41,35 @@ const useStyles = makeStyles((theme) => ({
     color: "#FFFFFF",
   },
   bannerChat: {
-    marginBottom: 39.5,
-  },
-  account: {
-    minWidth: 351,
-    flexGrow: 1,
-    display: "flex",
-    flexDirection: "column",
+    marginBottom: 20,
   },
   accountForm: {
-    flexGrow: 1,
-    paddingTop: "86px",
+    backgroundColor: "#FFF",
+    padding: "5% 5%",
+    borderRadius: "25px",
+    marginBottom: "5%",
   },
 }));
-
-const AuthLayout = (props) => {
+const AuthLayoutMobile = (props) => {
   const classes = useStyles();
   return (
     <div className={classes.root}>
-      <div className={classes.sideBanner}>
-        <div className={classes.bg}></div>
-        <div className={classes.bannerMiddle}>
-          <img
-            className={classes.bannerChat}
-            src={pathToBubbleIcon}
-            alt="message bubble"
-          />
-          <Typography className={classes.bannerText} component="p">
-            Converse with anyone with any language
-          </Typography>
-        </div>
+      <div className={classes.bg}></div>
+      <div className={classes.bannerMiddle}>
+        <img
+          className={classes.bannerChat}
+          src={pathToBubbleIcon}
+          alt="message bubble"
+        />
+        <Typography className={classes.bannerText} component="p">
+          Converse with anyone with any language
+        </Typography>
       </div>
-      <div className={classes.account}>
-        <AuthFormSwitch />
-        <div className={classes.accountForm}>{props.children}</div>
+      <div className={classes.accountForm}>
+        {props.children}
+        <AuthFormSwitch isMobile={true} />
       </div>
     </div>
   );
 };
-export default AuthLayout;
+export default AuthLayoutMobile;

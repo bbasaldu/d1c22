@@ -15,7 +15,7 @@ const useStyles = makeStyles((theme) => ({
     height: 'min-content',
     display: 'flex',
     alignItems: 'center',
-    marginRight: 42
+    
   },
   headerText: {
     fontSize: '14px',
@@ -37,6 +37,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 const AuthFormSwitch = (props) => {
+  const {isMobile} = props
   const classes = useStyles();
   const location = useLocation()
   const history = useHistory()
@@ -51,7 +52,7 @@ const AuthFormSwitch = (props) => {
   }
   return (
     <div className={classes.root}>
-        <div className={classes.container}>
+        <div className={classes.container} style={{marginRight: isMobile?0:42}}>
             <Typography className={classes.headerText}>
               {isLoginPage?"Don't have an account?":'Already have an account?'}
             </Typography>
