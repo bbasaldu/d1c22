@@ -8,14 +8,13 @@ const LoginPage = () => {
   const isMobile = useMediaQuery("(max-width:880px)");
   return (
     <Fragment>
-      {isMobile && (
+      {isMobile ? (
         <AuthLayoutMobile>
-          <Login />
+          <Login isMobile={isMobile} />
         </AuthLayoutMobile>
-      )}
-      {!isMobile && (
+      ) : (
         <AuthLayout>
-          <Login />
+          <Login isMobile={isMobile} />
         </AuthLayout>
       )}
     </Fragment>

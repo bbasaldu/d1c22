@@ -19,6 +19,9 @@ const useStyles = makeStyles((theme) => ({
   formContainer: {
     width: 380,
   },
+  formContainerMobile: {
+    width: 280,
+  },
   createAccountText: {
     fontWeight: 600,
     fontSize: "26px",
@@ -27,18 +30,18 @@ const useStyles = makeStyles((theme) => ({
   },
   textField: {
     marginBottom: 40,
-    fontSize: '14px',
-    fontWeight: 600
+    fontSize: "14px",
+    fontWeight: 600,
   },
   inputLabel: {
-    fontSize: '14px',
-    fontWeight: 400
+    fontSize: "14px",
+    fontWeight: 400,
   },
   inputLabelFocused: {
     color: `${theme.palette.secondary.main} !important`,
   },
   registerButton: {
-    fontSize: '16px',
+    fontSize: "16px",
     fontWeight: 700,
     backgroundColor: theme.palette.primary.main,
     color: "#FFF",
@@ -51,7 +54,7 @@ const useStyles = makeStyles((theme) => ({
 
 const Login = (props) => {
   const classes = useStyles();
-  const { user, register } = props;
+  const { user, register, isMobile } = props;
   const [formErrorMessage, setFormErrorMessage] = useState({});
 
   const handleRegister = async (event) => {
@@ -80,7 +83,11 @@ const Login = (props) => {
           Create an account.
         </Typography>
         <form onSubmit={handleRegister}>
-          <Grid className={classes.formContainer}>
+          <Grid
+            className={
+              isMobile ? classes.formContainerMobile : classes.formContainer
+            }
+          >
             <Grid>
               <FormControl fullWidth>
                 <TextField

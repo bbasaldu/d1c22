@@ -1,4 +1,4 @@
-import { Typography } from "@material-ui/core";
+import { Box, Grid, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import pathToBgImage from "../assets/bg-img.png";
 import pathToBubbleIcon from "../assets/bubble.svg";
@@ -6,10 +6,11 @@ import AuthFormSwitch from "../components/AuthFormSwitch";
 const useStyles = makeStyles((theme) => ({
   root: {
     position: "relative",
+    width: '100%',
     backgroundImage: `url(${pathToBgImage})`,
     backgroundSize: "cover",
     backgroundPosition: "top center",
-    minWidth: 425,
+    backgroundRepeat: 'no-repeat',
     minHeight: "100vh",
     zIndex: 1,
     display: "flex",
@@ -45,7 +46,7 @@ const useStyles = makeStyles((theme) => ({
   },
   accountForm: {
     backgroundColor: "#FFF",
-    padding: "5% 5%",
+    padding: "5% 8px",
     borderRadius: "25px",
     marginBottom: "5%",
   },
@@ -53,9 +54,9 @@ const useStyles = makeStyles((theme) => ({
 const AuthLayoutMobile = (props) => {
   const classes = useStyles();
   return (
-    <div className={classes.root}>
-      <div className={classes.bg}></div>
-      <div className={classes.bannerMiddle}>
+    <Grid className={classes.root}>
+      <Box className={classes.bg}></Box>
+      <Grid className={classes.bannerMiddle}>
         <img
           className={classes.bannerChat}
           src={pathToBubbleIcon}
@@ -64,12 +65,12 @@ const AuthLayoutMobile = (props) => {
         <Typography className={classes.bannerText} component="p">
           Converse with anyone with any language
         </Typography>
-      </div>
-      <div className={classes.accountForm}>
+      </Grid>
+      <Grid className={classes.accountForm}>
         {props.children}
         <AuthFormSwitch isMobile={true} />
-      </div>
-    </div>
+      </Grid>
+    </Grid>
   );
 };
 export default AuthLayoutMobile;

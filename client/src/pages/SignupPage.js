@@ -9,14 +9,13 @@ const SignupPage = () => {
 
   return (
     <Fragment>
-      {isMobile && (
+      {isMobile ? (
         <AuthLayoutMobile>
-          <Signup />
+          <Signup isMobile={isMobile} />
         </AuthLayoutMobile>
-      )}
-      {!isMobile && (
+      ) : (
         <AuthLayout>
-          <Signup />
+          <Signup isMobile={isMobile} />
         </AuthLayout>
       )}
     </Fragment>
