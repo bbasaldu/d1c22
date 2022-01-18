@@ -11,11 +11,14 @@ const useStyles = makeStyles((theme) => ({
     position: "relative",
     backgroundImage: `url(${pathToBgImage})`,
     backgroundRepeat: 'no-repeat',
+    backgroundColor: '#86B9FF',
+    backgroundSize: "contain",
     minWidth: 425,
     minHeight: 700,
     height: "100vh",
     zIndex: 1,
     display: "flex",
+    flexGrow: 1,
     justifyContent: "center",
   },
   bg: {
@@ -47,7 +50,7 @@ const useStyles = makeStyles((theme) => ({
   },
   account: {
     minWidth: 351,
-    flexGrow: 1,
+    flexGrow: 3,
     display: "flex",
     flexDirection: "column",
   },

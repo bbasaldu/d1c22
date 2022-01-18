@@ -39,7 +39,8 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   headerButtonMobile: {
-    width: 150
+    width: 150,
+    padding: "10px 52px",
   }
 }));
 const AuthFormSwitch = (props) => {

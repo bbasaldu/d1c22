@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
     width: 380,
   },
   formContainerMobile: {
-    width: 280,
+    width: '100%',
   },
   createAccountText: {
     fontWeight: 600,
@@ -28,10 +28,16 @@ const useStyles = makeStyles((theme) => ({
     lineHeight: "40px",
     marginBottom: 12,
   },
+  createAccountTextMobile: {
+    fontSize: '20px'
+  },
   textField: {
     marginBottom: 40,
     fontSize: "14px",
     fontWeight: 600,
+  },
+  textFieldMobile: {
+    marginBottom: 15
   },
   inputLabel: {
     fontSize: "14px",
@@ -50,6 +56,14 @@ const useStyles = makeStyles((theme) => ({
       backgroundColor: theme.palette.primary.main + "EE",
     },
   },
+  registerButtonMobile: {
+    padding: '10px 53px',
+  },
+  formWrapperMobile: {
+    flexGrow: 1,
+    padding: '0% 10%'
+  }
+
 }));
 
 const Login = (props) => {
@@ -78,8 +92,8 @@ const Login = (props) => {
 
   return (
     <Grid container justify="center">
-      <Box>
-        <Typography className={classes.createAccountText}>
+      <Box className={isMobile?classes.formWrapperMobile:''}>
+        <Typography className={[classes.createAccountText, isMobile?classes.createAccountTextMobile:''].join(' ')}>
           Create an account.
         </Typography>
         <form onSubmit={handleRegister}>
@@ -91,7 +105,7 @@ const Login = (props) => {
             <Grid>
               <FormControl fullWidth>
                 <TextField
-                  className={classes.textField}
+                  className={[classes.textField, isMobile?classes.textFieldMobile:''].join(' ')}
                   aria-label="username"
                   label="Username"
                   name="username"
@@ -110,7 +124,7 @@ const Login = (props) => {
             <Grid>
               <FormControl fullWidth>
                 <TextField
-                  className={classes.textField}
+                  className={[classes.textField, isMobile?classes.textFieldMobile:''].join(' ')}
                   label="E-mail address"
                   aria-label="e-mail address"
                   type="email"
@@ -129,7 +143,7 @@ const Login = (props) => {
             <Grid>
               <FormControl error={!!formErrorMessage.confirmPassword} fullWidth>
                 <TextField
-                  className={classes.textField}
+                  className={[classes.textField, isMobile?classes.textFieldMobile:''].join(' ')}
                   aria-label="password"
                   label="Password"
                   type="password"
@@ -152,7 +166,7 @@ const Login = (props) => {
             <Grid>
               <FormControl error={!!formErrorMessage.confirmPassword} fullWidth>
                 <TextField
-                  className={classes.textField}
+                  className={[classes.textField, isMobile?classes.textFieldMobile:''].join(' ')}
                   label="Confirm Password"
                   aria-label="confirm password"
                   type="password"
@@ -174,7 +188,7 @@ const Login = (props) => {
             </Grid>
             <Grid container justifyContent="center">
               <Button
-                className={classes.registerButton}
+                className={[classes.registerButton, isMobile?classes.registerButtonMobile:''].join(' ')}
                 type="submit"
                 variant="contained"
                 size="large"

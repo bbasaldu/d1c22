@@ -11,6 +11,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundSize: "cover",
     backgroundPosition: "top center",
     backgroundRepeat: 'no-repeat',
+    backgroundColor: '#86B9FF',
     minHeight: "100vh",
     zIndex: 1,
     display: "flex",
@@ -29,27 +30,29 @@ const useStyles = makeStyles((theme) => ({
   bannerMiddle: {
     position: "relative",
     zIndex: 2,
-    width: 269,
-    height: 186,
+    width: 'auto',
+    height: 'auto',
     textAlign: "center",
     overflowWrap: "break-word",
-    marginTop: "10px",
+    margin: '10px 0px'
   },
   bannerText: {
-    fontSize: 26,
+    fontSize: 20,
     fontWeight: 400,
     lineHeight: "40px",
     color: "#FFFFFF",
   },
   bannerChat: {
-    marginBottom: 20,
+    width: 50,
   },
   accountForm: {
+    width: '90%',
     backgroundColor: "#FFF",
     padding: "5% 8px",
     borderRadius: "25px",
     marginBottom: "5%",
   },
+  
 }));
 const AuthLayoutMobile = (props) => {
   const classes = useStyles();
@@ -66,7 +69,7 @@ const AuthLayoutMobile = (props) => {
           Converse with anyone with any language
         </Typography>
       </Grid>
-      <Grid className={classes.accountForm}>
+      <Grid className={[classes.accountForm, classes.accountFormMobile].join(' ')}>
         {props.children}
         <AuthFormSwitch isMobile={true} />
       </Grid>

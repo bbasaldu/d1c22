@@ -19,18 +19,24 @@ const useStyles = makeStyles((theme) => ({
     width: 380,
   },
   formContainerMobile: {
-    width: 280,
+    width: '100%',
   },
-  createAccountText: {
+  loginAccountText: {
     fontWeight: 600,
     fontSize: "26px",
     lineHeight: "40px",
     marginBottom: 12,
   },
+  loginAccountTextMobile: {
+    fontSize: '20px'
+  },
   textField: {
     marginBottom: 40,
     fontSize: "14px",
     fontWeight: 600,
+  },
+  textFieldMobile: {
+    marginBottom: 15
   },
   inputLabel: {
     fontSize: "14px",
@@ -49,6 +55,14 @@ const useStyles = makeStyles((theme) => ({
       backgroundColor: theme.palette.primary.main + "EE",
     },
   },
+  loginButtonMobile: {
+    padding: '10px 53px',
+  },
+  formWrapperMobile: {
+    flexGrow: 1,
+    padding: '0% 10%'
+  }
+  
 }));
 const Login = (props) => {
   const { user, login, isMobile } = props;
@@ -67,8 +81,8 @@ const Login = (props) => {
 
   return (
     <Grid container justify="center">
-      <Box>
-        <Typography className={classes.createAccountText}>
+      <Box className={classes.formWrapperMobile}>
+        <Typography className={[classes.loginAccountText, isMobile?classes.loginAccountTextMobile:''].join(' ')}>
           Welcome back!
         </Typography>
 
@@ -81,7 +95,7 @@ const Login = (props) => {
             <Grid>
               <FormControl fullWidth required>
                 <TextField
-                  className={classes.textField}
+                  className={[classes.textField, isMobile?classes.textFieldMobile:''].join(' ')}
                   aria-label="username"
                   label="Username"
                   name="username"
@@ -98,8 +112,8 @@ const Login = (props) => {
             </Grid>
             <FormControl fullWidth required>
               <TextField
-                className={classes.textField}
-                label="Password"
+                  className={[classes.textField, isMobile?classes.textFieldMobile:''].join(' ')}
+                  label="Password"
                 aria-label="password"
                 type="password"
                 name="password"
@@ -114,7 +128,7 @@ const Login = (props) => {
             </FormControl>
             <Grid container justifyContent="center">
               <Button
-                className={classes.loginButton}
+                className={[classes.loginButton, isMobile?classes.loginButtonMobile:''].join(' ')}
                 type="submit"
                 variant="contained"
                 size="large"
