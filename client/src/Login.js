@@ -81,7 +81,7 @@ const Login = (props) => {
 
   return (
     <Grid container justify="center">
-      <Box className={classes.formWrapperMobile}>
+      <Box className={isMobile?classes.formWrapperMobile:''}>
         <Typography className={[classes.loginAccountText, isMobile?classes.loginAccountTextMobile:''].join(' ')}>
           Welcome back!
         </Typography>
