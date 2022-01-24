@@ -10,14 +10,13 @@ import { makeStyles } from "@material-ui/core/styles";
 import { connect } from "react-redux";
 import { postMessage } from "../../store/utils/thunkCreators";
 import AddCircleIcon from "@material-ui/icons/AddCircle";
+import ImagePreview from "./ImagePreview";
 const useStyles = makeStyles(() => ({
   root: {
     justifySelf: "flex-end",
     marginTop: 15,
   },
-  inputWrapper: {
-    display: "flex",
-    flexDirection: "row",
+  formWrapper: {
     marginBottom: 20,
     borderRadius: 8,
     backgroundColor: "#F4F6FA",
@@ -29,6 +28,10 @@ const useStyles = makeStyles(() => ({
     },
     willChange: "background-color",
     transition: "background-color 200ms linear",
+  },
+  inputWrapper: {
+    display: "flex",
+    flexDirection: "row",
   },
   input: {
     height: 70,
@@ -66,8 +69,20 @@ const url = process.env.REACT_APP_UPLOAD_URL
 const Input = (props) => {
   const classes = useStyles();
   const [text, setText] = useState("");
+  const [showFilePreview, setShowFilePreview] = useState(false)
+  const [files, setFiles] = useState([])
   const { postMessage, otherUser, conversationId, user } = props;
   const fileRef = useRef();
+  const handleFilePreview = () => {
+    const files = fileRef.current.files;
+    if(files.length > 0){
+      setFiles(files)
+      setShowFilePreview(true)
+    }
+    else{
+      setShowFilePreview(false)
+    }
+  }
   const handleChange = (event) => {
     setText(event.target.value);
   };
@@ -77,7 +92,7 @@ const Input = (props) => {
     const attachments = [];
     if (files.length > 0) {
       for (let i = 0; i < files.length; i++) {
-        let file = files[i];
+        const file = files[i];
         formData.append("file", file);
         formData.append("upload_preset", "pyqhus40");
         const res = await fetch(url, {
@@ -88,6 +103,7 @@ const Input = (props) => {
         attachments.push(data.url);
       }
     }
+    fileRef.current.value = ""
     return attachments;
   };
   const handleSubmit = async (event) => {
@@ -108,7 +124,10 @@ const Input = (props) => {
   return (
     <form className={classes.root} onSubmit={handleSubmit}>
       <FormControl fullWidth hiddenLabel>
+        <Box className={classes.formWrapper}>
+        {showFilePreview && <ImagePreview files={files}/>}
         <Box className={classes.inputWrapper}>
+        
           <Tooltip title="Upload Image" arrow>
             <Button
               component="label"
@@ -120,6 +139,8 @@ const Input = (props) => {
                 ref={fileRef}
                 type="file"
                 hidden
+                multiple
+                onChange={handleFilePreview}
               />
             </Button>
           </Tooltip>
@@ -131,6 +152,7 @@ const Input = (props) => {
             name="text"
             onChange={handleChange}
           />
+        </Box>
         </Box>
       </FormControl>
     </form>

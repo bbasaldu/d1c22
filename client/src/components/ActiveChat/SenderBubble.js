@@ -30,18 +30,19 @@ const useStyles = makeStyles(() => ({
 
 const SenderBubble = (props) => {
   const classes = useStyles();
-  const { time, text, images } = props;
+  const { time, text, images, id } = props;
 
   return (
     <Box className={classes.root}>
       <Typography className={classes.date}>{time}</Typography>
-      {images[0] && (
+      {images && images.length > 0 && (
         <ImageBubble
-          src={images[0]}
-          withText={text.length > 0}
+          images={images}
           variant="sender"
+          id={id}
         />
       )}
+
       {text.length > 0 && (
         <Box className={classes.bubble}>
           <Typography className={classes.text}>{text}</Typography>
