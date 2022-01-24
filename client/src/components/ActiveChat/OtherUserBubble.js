@@ -50,7 +50,7 @@ const OtherUserBubble = (props) => {
         {images && images.length > 0 && (
           <ImageBubble
             images={images}
-            variant="sender"
+            variant="otherUser"
             id={id}
           />
         )}
