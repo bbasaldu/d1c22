@@ -9,8 +9,9 @@ import {
 import { makeStyles } from "@material-ui/core/styles";
 import { connect } from "react-redux";
 import { postMessage } from "../../store/utils/thunkCreators";
-import AddCircleIcon from "@material-ui/icons/AddCircle";
+import ContentCopyIcon from '@material-ui/icons/FileCopyOutlined';
 import ImagePreview from "./ImagePreview";
+import axios from "axios";
 const useStyles = makeStyles(() => ({
   root: {
     justifySelf: "flex-end",
@@ -21,10 +22,10 @@ const useStyles = makeStyles(() => ({
     borderRadius: 8,
     backgroundColor: "#F4F6FA",
     "&:hover": {
-      backgroundColor: "rgba(0, 0, 0, 0.13)",
+      backgroundColor: "rgba(0, 0, 0, 0.05)",
     },
     "&:focus-within": {
-      backgroundColor: "rgba(0, 0, 0, 0.13)",
+      backgroundColor: "rgba(0, 0, 0, 0.05)",
     },
     willChange: "background-color",
     transition: "background-color 200ms linear",
@@ -50,61 +51,69 @@ const useStyles = makeStyles(() => ({
     margin: 0,
     padding: 0,
     minWidth: 0,
-    marginLeft: 10,
+    marginRight: 10,
     cursor: "pointer",
     "&:hover": {
       backgroundColor: "transparent",
     },
     "& svg": {
-      color: "rgba(0,0,0,1)",
+      color: "#C8C9CD",
     },
     "& svg:hover": {
       willChange: "color",
       transition: "color 200ms linear",
-      color: "rgba(0, 0, 0, 0.5)",
+      color: "rgba(0, 0, 0, 0.8)",
     },
   },
 }));
-const url = process.env.REACT_APP_UPLOAD_URL
+const url = process.env.REACT_APP_UPLOAD_URL;
 const Input = (props) => {
   const classes = useStyles();
   const [text, setText] = useState("");
-  const [showFilePreview, setShowFilePreview] = useState(false)
-  const [files, setFiles] = useState([])
+  const [showFilePreview, setShowFilePreview] = useState(false);
+  const [files, setFiles] = useState([]);
   const { postMessage, otherUser, conversationId, user } = props;
   const fileRef = useRef();
   const handleFilePreview = () => {
     const files = fileRef.current.files;
-    if(files.length > 0){
-      setFiles(files)
-      setShowFilePreview(true)
+    if (files.length > 0) {
+      setFiles(files);
+      setShowFilePreview(true);
+    } else {
+      setShowFilePreview(false);
     }
-    else{
-      setShowFilePreview(false)
-    }
-  }
+  };
   const handleChange = (event) => {
     setText(event.target.value);
   };
   const handleFileUpload = async () => {
     const files = fileRef.current.files;
-    const formData = new FormData();
-    const attachments = [];
+
+    const promises = [];
     if (files.length > 0) {
       for (let i = 0; i < files.length; i++) {
+        const formData = new FormData();
         const file = files[i];
         formData.append("file", file);
         formData.append("upload_preset", "pyqhus40");
-        const res = await fetch(url, {
-          method: "POST",
-          body: formData,
-        });
-        const data = await res.json();
-        attachments.push(data.url);
+        promises.push(
+          axios.post(url, formData, {
+            transformRequest: (data, headers) => {
+              delete headers["x-access-token"];
+              return data;
+            },
+          })
+        );
       }
     }
-    fileRef.current.value = ""
-    return attachments;
+    //return;
+    return Promise.all(promises)
+      .then((responses) => {
+        fileRef.current.value = "";
+        const attachments = responses.map((res) => res.data.url);
+        return attachments;
+      })
+      .catch((err) => null);
   };
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -119,42 +128,42 @@ const Input = (props) => {
     };
     await postMessage(reqBody);
     setText("");
-    setFiles([])
-    setShowFilePreview(false)
+    setFiles([]);
+    setShowFilePreview(false);
   };
 
   return (
     <form className={classes.root} onSubmit={handleSubmit}>
       <FormControl fullWidth hiddenLabel>
         <Box className={classes.formWrapper}>
-        {showFilePreview && <ImagePreview files={files}/>}
-        <Box className={classes.inputWrapper}>
-        
-          <Tooltip title="Upload Image" arrow>
-            <Button
-              component="label"
-              disableRipple
-              className={classes.imageUpload}
-            >
-              <AddCircleIcon />
-              <input
-                ref={fileRef}
-                type="file"
-                hidden
-                multiple
-                onChange={handleFilePreview}
-              />
-            </Button>
-          </Tooltip>
-          <FilledInput
-            classes={{ root: classes.input }}
-            disableUnderline
-            placeholder="Type something..."
-            value={text}
-            name="text"
-            onChange={handleChange}
-          />
-        </Box>
+          {showFilePreview && <ImagePreview files={files} />}
+          <Box className={classes.inputWrapper}>
+            
+            <FilledInput
+              classes={{ root: classes.input }}
+              disableUnderline
+              placeholder="Type something..."
+              value={text}
+              name="text"
+              onChange={handleChange}
+            />
+            <Tooltip title="Upload Image" arrow>
+              <Button
+                component="label"
+                disableRipple
+                className={classes.imageUpload}
+              >
+                <ContentCopyIcon />
+                <input
+                  ref={fileRef}
+                  type="file"
+                  hidden
+                  multiple
+                  onChange={handleFilePreview}
+                />
+              </Button>
+            </Tooltip>
+          </Box>
         </Box>
       </FormControl>
     </form>
