@@ -106,14 +106,14 @@ const Input = (props) => {
         );
       }
     }
-    //return;
-    return Promise.all(promises)
-      .then((responses) => {
-        fileRef.current.value = "";
-        const attachments = responses.map((res) => res.data.url);
-        return attachments;
-      })
-      .catch((err) => null);
+    try {
+      const responses = await Promise.all(promises);
+      fileRef.current.value = "";
+      const attachments = responses.map((res) => res.data.url);
+      return attachments;
+    } catch (err) {
+      console.error(err);
+    };
   };
   const handleSubmit = async (event) => {
     event.preventDefault();

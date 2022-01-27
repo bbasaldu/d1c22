@@ -25,7 +25,8 @@ const ChatContent = (props) => {
 
   const { conversation } = props;
   const { latestMessageText, otherUser } = conversation;
-
+  const latestMessageObject =
+    conversation.messages[conversation.messages.length - 1];
   return (
     <Box className={classes.root}>
       <Box>
@@ -33,7 +34,10 @@ const ChatContent = (props) => {
           {otherUser.username}
         </Typography>
         <Typography className={classes.previewText}>
-          {latestMessageText}
+          {latestMessageObject.text.length === 0 &&
+          latestMessageObject.attachments.length > 0
+            ? "[attachment]"
+            : latestMessageText}
         </Typography>
       </Box>
     </Box>

@@ -35,15 +35,17 @@ const SenderBubble = (props) => {
   return (
     <Box className={classes.root}>
       <Typography className={classes.date}>{time}</Typography>
-      {images && images.length > 0 && (
-        <ImageBubble
-          images={images}
-          variant="sender"
-          id={id}
-        />
+      {images?.length > 1 && text.length > 0 && (
+        <Box className={classes.bubble}>
+          <Typography className={classes.text}>{text}</Typography>
+        </Box>
+      )}
+      {images?.length > 0 && (
+        <ImageBubble images={images} variant="sender" id={id} />
       )}
 
-      {text.length > 0 && (
+      {((text.length > 0 && (!images || images.length === 0)) ||
+        (images?.length === 1 && text.length > 0)) && (
         <Box className={classes.bubble}>
           <Typography className={classes.text}>{text}</Typography>
         </Box>

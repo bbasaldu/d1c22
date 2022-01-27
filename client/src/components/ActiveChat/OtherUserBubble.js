@@ -47,14 +47,16 @@ const OtherUserBubble = (props) => {
         <Typography className={classes.usernameDate}>
           {otherUser.username} {time}
         </Typography>
-        {images && images.length > 0 && (
-          <ImageBubble
-            images={images}
-            variant="otherUser"
-            id={id}
-          />
+        {images?.length > 1 && text.length > 0 && (
+          <Box className={classes.bubble}>
+            <Typography className={classes.text}>{text}</Typography>
+          </Box>
         )}
-        {text.length > 0 && (
+        {images?.length > 0 && (
+          <ImageBubble images={images} variant="otherUser" id={id} />
+        )}
+        {((text.length > 0 && (!images || images.length === 0)) ||
+          (images?.length === 1 && text.length > 0)) && (
           <Box className={classes.bubble}>
             <Typography className={classes.text}>{text}</Typography>
           </Box>

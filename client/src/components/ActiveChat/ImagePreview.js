@@ -12,11 +12,7 @@ const useStyles = makeStyles(() => ({
 const ImagePreview = (props) => {
   const { files } = props;
   const classes = useStyles();
-  const images = [];
-  for (let i = 0; i < files.length; i++) {
-    const src = URL.createObjectURL(files[i]);
-    images.push(src);
-  }
+  const images = [...files].map((file) => URL.createObjectURL(file));
   return (
     <Box className={classes.root}>
       {images.map((src,i) => {
